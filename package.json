@@ -1,24 +1,49 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/infra/http/server.ts"
-  },
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@types/node": "^22.13.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
-  },
-  "dependencies": {
-    "@fastify/cors": "^10.0.2",
-    "fastify": "^5.2.1",
-    "fastify-type-provider-zod": "^4.0.2",
-    "zod": "^3.24.1"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"dev": "tsx watch --env-file .env src/infra/http/server.ts",
+		"test": "dotenv -e .env.test -- vitest run",
+		"test:watch": "dotenv -e .env.test -- vitest run --watch",
+		"pretest:watch": "npm run db:migrate:test",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate",
+		"db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
+		"pretest": "npm run db:migrate:test",
+		"db:studio": "drizzle-kit studio",
+		"build": "tsup src/infra/http/server.ts ",
+		"start": "node dist/server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/node": "^22.13.1",
+		"dotenv-cli": "^8.0.0",
+		"drizzle-kit": "^0.30.4",
+		"tsx": "^4.19.2",
+		"typescript": "^5.7.3",
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.0.5",
+		"tsup": "^8.3.6"
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.744.0",
+		"@aws-sdk/lib-storage": "^3.744.0",
+		"@faker-js/faker": "^9.5.0",
+		"@fastify/cors": "^10.0.2",
+		"@fastify/multipart": "^9.0.3",
+		"@fastify/swagger": "^9.4.2",
+		"@fastify/swagger-ui": "^5.2.1",
+		"csv-stringify": "^6.5.2",
+		"dayjs": "^1.11.13",
+		"drizzle-orm": "^0.39.2",
+		"fastify": "^5.2.1",
+		"fastify-type-provider-zod": "^4.0.2",
+		"postgres": "^3.4.5",
+		"uuidv7": "^1.0.2",
+		"zod": "^3.24.1"
+	}
 }
