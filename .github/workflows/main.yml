@@ -19,7 +19,9 @@ jobs:
               with:
                 node-version: 18
                 
-            - run: npm test
+            - name: install dependencies
+              id: install-dependencies
+              run: npm test
 
             - name: Configure AWS Credentials
               id: configure-aws-credentials
