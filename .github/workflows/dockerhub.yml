@@ -10,6 +10,13 @@ jobs:
         name: build
         runs-on: ubuntu-latest
         steps:
+            - name: Generate tag
+              id: tag
+              run: |
+                SHA=$(echo $GITHUB_SHA | head -c7)
+                echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+                
         #     - name: Checkout
         #       id: checkout
         #       uses: actions/checkout@v4 
