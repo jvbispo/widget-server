@@ -36,3 +36,4 @@ jobs:
               run: |
                 docker build -t $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG .
                 docker push $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG
+            
