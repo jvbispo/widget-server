@@ -6,8 +6,8 @@ on:
             - main
 
 jobs:
-    build:
-        name: build
+    buildDocker:
+        name: buildDocker
         runs-on: ubuntu-latest
         steps:
             - name: Generate tag
@@ -16,7 +16,7 @@ jobs:
                 SHA=$(echo $GITHUB_SHA | head -c7)
                 echo "sha=$SHA" >> $GITHUB_OUTPUT
 
-                
+
         #     - name: Checkout
         #       id: checkout
         #       uses: actions/checkout@v4 
