@@ -1,9 +1,11 @@
-name: widger-server pipe
+name: widger-server pipe ECR
 
 on:
     push: 
         branches:
             - main
+env:
+    CONTAINER_REPOSITORY: personal/widget-server
 
 jobs:
     build:
@@ -28,7 +30,10 @@ jobs:
 
             - name: Build and push the image to AWS ECR
               id: build-and-push
+              env:
+                ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+                ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
               run: |
                 docker build -t widget-server:v4 .
-                docker tag widget-server:v4 763545791586.dkr.ecr.us-east-2.amazonaws.com/personal/widget-server:v4
-                docker push 763545791586.dkr.ecr.us-east-2.amazonaws.com/personal/widget-server:v4
+                docker tag widget-server:v4 $ECR_REGISTRY/$vars.ECR_REPOSITORY:v4
+                docker push $ECR_REGISTRY/$vars.ECR_REPOSITORY:v4

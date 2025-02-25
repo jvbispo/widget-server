@@ -1,0 +1,34 @@
+# name: widger-server pipe DockerHub
+
+# on:
+#     push: 
+#         branches:
+#             - main
+
+# jobs:
+#     build:
+#         name: build
+#         runs-on: ubuntu-latest
+#         steps:
+#             - name: Checkout
+#               id: checkout
+#               uses: actions/checkout@v4
+
+#             # - name: Configure AWS Credentials
+#             #   id: configure-aws-credentials
+#             #   uses: aws-actions/configure-aws-credentials@v4
+#             #   with:
+#             #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#             #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#             #     aws-region: ${{ vars.AWS_REGION }}
+
+#             # - name: Login to AWS ECR
+#             #   id: login-ecr
+#             #   uses: aws-actions/amazon-ecr-login@v2 
+
+#             # - name: Build and push the image to AWS ECR
+#             #   id: build-and-push
+#             #   run: |
+#             #     docker build -t widget-server:v4 .
+#             #     docker tag widget-server:v4 763545791586.dkr.ecr.us-east-2.amazonaws.com/personal/widget-server:v4
+#             #     docker push 763545791586.dkr.ecr.us-east-2.amazonaws.com/personal/widget-server:v4
