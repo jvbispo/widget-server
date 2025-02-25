@@ -34,5 +34,5 @@ jobs:
                 DOCKER_HUB_REPOSITORY: ${{ vars.DOCKER_HUB_REPOSITORY }}
                 IMAGE_TAG: ${{ steps.tag.outputs.SHA }}
               run: |
-                docker build -t $ECR_REGISTRY/$vars.ECR_REPOSITORY:$IMAGE_TAG .
-                docker push $ECR_REGISTRY/$vars.ECR_REPOSITORY:$IMAGE_TAG
+                docker build -t $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG .
+                docker push $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG
