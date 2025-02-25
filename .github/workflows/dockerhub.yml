@@ -32,7 +32,7 @@ jobs:
               env:
                 DOCKER_HUB_REGISTRY: ${{ vars.DOCKER_HUB_REGISTRY }}
                 DOCKER_HUB_REPOSITORY: ${{ vars.DOCKER_HUB_REPOSITORY }}
-                IMAGE_TAG: ${{ steps.tag.outputs.SHA }}
+                IMAGE_TAG: ${{ steps.tag.outputs.sha }}
               run: |
                 docker build -t $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG .
                 docker push $DOCKER_HUB_REPOSITORY/$DOCKER_HUB_REGISTRY:$IMAGE_TAG
