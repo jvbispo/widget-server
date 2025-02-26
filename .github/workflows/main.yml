@@ -23,56 +23,56 @@ jobs:
             #   id: install-dependencies
             #   run: npm test
 
-            # - name: Configure AWS Credentials
-            #   id: configure-aws-credentials
-            #   uses: aws-actions/configure-aws-credentials@v4
-            #   with:
-            #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            #     aws-region: ${{ vars.AWS_REGION }}
+            - name: Configure AWS Credentials
+              id: configure-aws-credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ${{ vars.AWS_REGION }}
 
-            # - name: Login to AWS ECR
-            #   id: login-ecr
-            #   uses: aws-actions/amazon-ecr-login@v2
+            - name: Login to AWS ECR
+              id: login-ecr
+              uses: aws-actions/amazon-ecr-login@v2
 
-            # - name: Set up docker Buildx
-            #   id: buildx
-            #   uses: docker/setup-buildx-action@v6
+            - name: Set up docker Buildx
+              id: buildx
+              uses: docker/setup-buildx-action@v6
 
-            # - name: Generate tag
-            #   id: tag
-            #   run: |
-            #     SHA=$(echo $GITHUB_SHA | head -c7)
-            #     echo "sha=$SHA" >> $GITHUB_OUTPUT
+            - name: Generate tag
+              id: tag
+              run: |
+                SHA=$(echo $GITHUB_SHA | head -c7)
+                echo "sha=$SHA" >> $GITHUB_OUTPUT
 
-            # - name: Build and push the image to AWS ECR
-            #   uses: docker/build-push-action@v6
-            #   with:
-            #     context: .
-            #     load: true
-            #     cache-from: type=gha
-            #     cache-to: type=gha,mode=max
-            #     tags: | 
-            #       ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
+            - name: Build and push the image to AWS ECR
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                load: true
+                cache-from: type=gha
+                cache-to: type=gha,mode=max
+                tags: | 
+                  ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
 
-            # - name: Run Trivy vulnerability scanner
-            #   id: run-trivi-scanner
-            #   uses: aquasecurity/trivy-action@0.28.0
-            #   with:
-            #       image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
-            #       format: 'table'
-            #       ignore-unfixed: true
-            #       vuln-type: 'os,library'
-            #       severity: 'CRITICAL,HIGH'
+            - name: Run Trivy vulnerability scanner
+              id: run-trivi-scanner
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                  image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
+                  format: 'table'
+                  ignore-unfixed: true
+                  vuln-type: 'os,library'
+                  severity: 'CRITICAL,HIGH'
 
-            # - name: Build and push the image to AWS ECR
-            #   uses: docker/build-push-action@v6
-            #   with:
-            #     context: .
-            #     cache-from: type=gha
-            #     push: true
-            #     tags: | 
-            #       ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.tag.outputs.sha }}
+            - name: Build and push the image to AWS ECR
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                cache-from: type=gha
+                push: true
+                tags: | 
+                  ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.tag.outputs.sha }}
 
            
 
