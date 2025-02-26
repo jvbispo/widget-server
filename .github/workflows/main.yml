@@ -45,9 +45,29 @@ jobs:
               uses: docker/build-push-action@v6
               with:
                 context: .
+                load: true
+                tags: | 
+                  ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
+
+            - name: Run Trivy vulnerability scanner
+              id: run-trivi-scanner
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                  image-ref: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
+                  format: 'table'
+                  ignore-unfixed: true
+                  vuln-type: 'os,library'
+                  severity: 'CRITICAL,HIGH'
+
+            - name: Build and push the image to AWS ECR
+              uses: docker/build-push-action@v6
+              with:
+                context: .
                 push: true
                 tags: | 
-                  ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.tag.outputs.SHA }}
+                  ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:test
+
+           
 
             # - name: Build and push the image to AWS ECR
             #   id: build-and-push
