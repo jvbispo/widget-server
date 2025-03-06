@@ -5,9 +5,10 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { fastify } from 'fastify';
 import { hasZodFastifySchemaValidationErrors, serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
-import { exportUploadsRoute } from "./routes/export-uploads";
+import { exportUploadsRoute, healthCheckRoute } from "./routes/export-uploads";
 import { getUploadsRoute } from "./routes/get-uploads";
 import { uploadImageRoute } from "./routes/upload-image";
+import { healthCheckRoute } from "./routes/export-uploads";
 import { transformSwaggerSchema } from "./transform-swagger-schema";
 
 const server = fastify();
@@ -48,6 +49,7 @@ server.register( fastifySwaggerUi, {
 server.register( uploadImageRoute );
 server.register( getUploadsRoute );
 server.register( exportUploadsRoute );
+server.register( healthCheckRoute )
 
 server.listen( { port: 3333, host: "0.0.0.0" } ).then( e => {
     console.log( "Server running!!!" )
