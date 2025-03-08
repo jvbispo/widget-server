@@ -6,8 +6,8 @@ import { isRight, unwrapEither } from "@/shared/either";
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-export const getHealthCheck: FastifyPluginAsyncZod = async ( server ) => {
-    server.get( "/health-check", {
+export const healthCheckRoute: FastifyPluginAsyncZod = async ( server ) => {
+    server.get( "/health", {
         schema: {
             summary: "Health check ",
             tags: [ "healthCheck" ]
