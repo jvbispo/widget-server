@@ -89,7 +89,7 @@ jobs:
               id: render-task-definition
               uses: aws-actions/amazon-ecs-render-task-definition@v1
               with:
-                task-definition: .aws/task-definition.json
+                task-definition: task-definition.json
                 container-name: widget-server
                 image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.tag.outputs.sha }}
         
