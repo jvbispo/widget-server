@@ -14,6 +14,6 @@ export const healthCheckRoute: FastifyPluginAsyncZod = async ( server ) => {
         }
     }, async ( request, reply ) => {
       
-        return reply.status( 200 ).send( { message: "OK" } );
+        return reply.status( 200 ).send( { message: "Tudo ok!" } );
     } );
 }
