@@ -86,21 +86,17 @@ jobs:
 
 
             - name: Render Amazon ECS task definition
-              id: render-web-container
+              id: render-task-definition
               uses: aws-actions/amazon-ecs-render-task-definition@v1
               with:
                 task-definition: .aws/task-definition.json
-                # task-definition-arn:  task-definition-arn
-                # task-definition-family: task-definition-family-name 
-                # task-definition-revision: task-definition-revision
                 container-name: widget-server
                 image: ${{ steps.login-ecr.outputs.registry }}/${{ vars.ECR_REPOSITORY }}:${{ steps.tag.outputs.sha }}
-                # environment-variables: "LOG_LEVEL=info"
-                # secrets: "SECRET_KEY=arn:aws:ssm:region:0123456789:parameter/secret"
         
-            # - name: Deploy to Amazon ECS service
-            #   uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-            #   with:
-            #     task-definition: ${{ steps.render-web-container.outputs.task-definition }}
-            #     service: my-service
-            #     cluster: my-cluster
+            - name: Deploy to Amazon ECS service
+              uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+              with:
+                task-definition: ${{ steps.render-render-task-definition.outputs.task-definition }}
+                service: widget-server
+                cluster: personal-ecs
+                wait-for-service-stability: true
