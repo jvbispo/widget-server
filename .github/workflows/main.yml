@@ -97,6 +97,6 @@ jobs:
               uses: aws-actions/amazon-ecs-deploy-task-definition@v2
               with:
                 task-definition: ${{ steps.render-task-definition.outputs.task-definition }}
-                service: widget-server
+                service: widget-service
                 cluster: personal-ecs
                 wait-for-service-stability: true
